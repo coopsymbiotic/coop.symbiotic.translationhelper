@@ -1,5 +1,5 @@
 Package: org.civicrm.translationhelper
-Copyright (C) 2015, Mathieu Lutfy <mathieu@bidon.ca>
+Copyright (C) 2015, Mathieu Lutfy <mathieu@symbiotic.coop>
 Licensed under the GNU Affero Public License 3.0 (below).
 
 -------------------------------------------------------------------------------
