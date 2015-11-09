@@ -175,7 +175,7 @@ function _translationhelper_civix_civicrm_managed(&$entities) {
     $es = include $file;
     foreach ($es as $e) {
       if (empty($e['module'])) {
-        $e['module'] = 'org.civicrm.translationhelper';
+        $e['module'] = 'coop.symbiotic.translationhelper';
       }
       $entities[] = $e;
     }
@@ -204,7 +204,7 @@ function _translationhelper_civix_civicrm_caseTypes(&$caseTypes) {
       // throw new CRM_Core_Exception($errorMessage);
     }
     $caseTypes[$name] = array(
-      'module' => 'org.civicrm.translationhelper',
+      'module' => 'coop.symbiotic.translationhelper',
       'name' => $name,
       'file' => $file,
     );
@@ -230,7 +230,7 @@ function _translationhelper_civix_civicrm_angularModules(&$angularModules) {
     $name = preg_replace(':\.ang\.php$:', '', basename($file));
     $module = include $file;
     if (empty($module['ext'])) {
-      $module['ext'] = 'org.civicrm.translationhelper';
+      $module['ext'] = 'coop.symbiotic.translationhelper';
     }
     $angularModules[$name] = $module;
   }

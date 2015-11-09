@@ -4,7 +4,7 @@ CiviCRM Translation Helper
 TODO description.
 
 To get the latest version of this module:  
-https://github.com/coopsymbiotic/org.civicrm.translationhelper/issues
+https://github.com/coopsymbiotic/coop.symbiotic.translationhelper/issues
 
 Distributed under the terms of the GNU Affero General public license (AGPL).
 See LICENSE.txt for details.
@@ -37,7 +37,7 @@ Support
 -------
 
 Please post bug reports in the issue tracker of this project on github:  
-https://github.com/coopsymbiotic/org.civicrm.translationhelper/issues
+https://github.com/coopsymbiotic/coop.symbiotic.translationhelper/issues
 
 For general support questions, please use the CiviCRM Extensions forum:  
 http://forum.civicrm.org/index.php/board,57.0.html

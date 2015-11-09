@@ -1,4 +1,4 @@
-Package: org.civicrm.translationhelper
+Package: coop.symbiotic.translationhelper
 Copyright (C) 2015, Mathieu Lutfy <mathieu@symbiotic.coop>
 Licensed under the GNU Affero Public License 3.0 (below).
 
