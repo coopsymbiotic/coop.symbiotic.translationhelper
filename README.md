@@ -27,6 +27,15 @@ Installation
 
 The direct URL for now is: /civicrm/a/#/i18n
 
+Developer notes
+---------------
+
+If you are installing from git, you must run 'bower install' in order to install
+the dependancies.
+
+This extension uses a more recent version of jQuery DataTables
+since the one included in CiviCRM 4.6 has known bugs when dealing with objects.
+
 Brainstorm
 ----------
 
