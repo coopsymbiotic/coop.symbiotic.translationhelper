@@ -4,34 +4,40 @@
   </div>
 
   <form id="crm-i18n-explorer">
-    <div>
-      <span>{{ ts('Languages:') }}</span>
-
-      <span ng-repeat="(key, val) in enabled_languages">
-        <label><input type="checkbox" ng-model="languages[key]" ng-true-value="'{{key}}'" ng-false-value="''">{{val}}</label>
-      </span>
+    <div class="crm-section">
+      <div class="label">{{ ts('Languages:') }}</div>
+      <div class="content">
+        <span ng-repeat="(key, val) in enabled_languages">
+          <label><input type="checkbox" ng-model="languages[key]" ng-true-value="'{{key}}'" ng-false-value="''"> {{val}}</label>
+        </span>
+      </div>
     </div>
-    <div>
-      <label>{{ ts('Entity:') }}</label>
-      <select class="crm-form-select big" id="crm-i18n-entity" name="crm-i18n-stringtype" ng-model="entity" ng-change="search()">
-        <option value="">{{ ts('- select -') }}</option>
-        <option value="all">{{ ts('- all -') }}</option>
-        <option value="ContributionPage">{{ ts('Contribution Pages') }}</option>
-        <option value="Event">{{ ts('Event Pages') }}</option>
-        <option value="CustomGroup">{{ ts('Custom Groups') }}</options>
-        <option value="CustomField">{{ ts('Custom Fields') }}</options>
-        <option value="OptionGroup">{{ ts('Option Groups') }}</options>
-        <option value="OptionValue">{{ ts('Option Values') }}</options>
-      </select>
+    <div class="crm-section">
+      <!-- FIXME should use variable from scope -->
+      <div class="label"><label>{{ ts('Entity:') }}</label></div>
+      <div class="content">
+        <select class="crm-form-select big" id="crm-i18n-entity" name="crm-i18n-stringtype" ng-model="entity" ng-change="search()">
+          <option value="">{{ ts('- select -') }}</option>
+          <option value="all">{{ ts('- all -') }}</option>
+          <option value="ContributionPage">{{ ts('Contribution Pages') }}</option>
+          <option value="Event">{{ ts('Event Pages') }}</option>
+          <option value="CustomGroup">{{ ts('Custom Groups') }}</options>
+          <option value="CustomField">{{ ts('Custom Fields') }}</options>
+          <option value="OptionGroup">{{ ts('Option Groups') }}</options>
+          <option value="OptionValue">{{ ts('Option Values') }}</options>
+        </select>
+      </div>
     </div>
-    <div>
-      <label>{{ ts('Search string:') }}</label>
-      <input
-        type="text" class="crm-form-text"
-        ng-model="stringtext"
-        ng-change="search()"
-        ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }"
-      /> (not implemented yet)
+    <div class="crm-section">
+      <div class="label"><label>{{ ts('Search string:') }}</label></div>
+      <div class="content">
+        <input
+          type="text" class="crm-form-text"
+          ng-model="stringtext"
+          ng-change="search()"
+          ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }"
+        /> (not implemented yet)
+      </div>
     </div>
   </form>
 
