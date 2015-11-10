@@ -23,6 +23,10 @@ TODO:
 * Export as a spreadsheet for Excel/LibreOffice.
 * Import from a spreadsheet.
 
+Demo:
+
+* https://www.youtube.com/watch?v=Lfs_AUEejCM
+
 Requirements
 ------------
 
