@@ -109,6 +109,8 @@ class CRM_TranslationHelper_BAO_FindStrings {
   /**
    * Returns the intersection of $params[$key] and $all_options.
    * Useful for validating and filtering user selections.
+   *
+   * Always returns the keys of an array, since that's what we usually use later on.
    */
   static function filterParameter($key, $params, &$all_options) {
     if (isset($params[$key])) {
@@ -121,6 +123,11 @@ class CRM_TranslationHelper_BAO_FindStrings {
         $all_options = array_intersect($x, $y);
       }
       else {
+        if ($t == 'all') {
+          $all_options = array_keys($all_options);
+          return;
+        }
+
         $x = array($t);
         $y = array_keys($all_options);
 

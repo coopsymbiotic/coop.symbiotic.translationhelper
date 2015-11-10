@@ -14,7 +14,8 @@
     <div>
       <label>{{ ts('Entity:') }}</label>
       <select class="crm-form-select big" id="crm-i18n-entity" name="crm-i18n-stringtype" ng-model="entity" ng-change="search()">
-        <option name="">{{ ts('- all -') }}</option>
+        <option value="">{{ ts('- select -') }}</option>
+        <option value="all">{{ ts('- all -') }}</option>
         <option value="ContributionPage">{{ ts('Contribution Pages') }}</option>
         <option value="Event">{{ ts('Event Pages') }}</option>
         <option value="CustomGroup">{{ ts('Custom Groups') }}</options>
