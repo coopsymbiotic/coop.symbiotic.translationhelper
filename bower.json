@@ -8,6 +8,9 @@
   "license": "AGPL3",
   "homepage": "https://github.com/coopsymbiotic.coop/coop.symbiotic.translationhelper",
   "private": true,
+  "dependencies": {
+    "datatables": "~1.10.10"
+  },
   "ignore": [
     "**/.*",
     "node_modules",
