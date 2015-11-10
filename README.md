@@ -9,10 +9,19 @@ https://github.com/coopsymbiotic/coop.symbiotic.translationhelper/issues
 Distributed under the terms of the GNU Affero General public license (AGPL).
 See LICENSE.txt for details.
 
+The development of this extension was sponsored by:  
+National Democratic Institute https://www.ndi.org
+
 Features
 --------
 
-TODO
+* Search for translatable user-configurations.
+* Edit/update translations directly from the search results.
+
+TODO:
+
+* Export as a spreadsheet for Excel/LibreOffice.
+* Import from a spreadsheet.
 
 Requirements
 ------------
