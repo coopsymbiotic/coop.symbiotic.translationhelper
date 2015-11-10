@@ -1,0 +1,7 @@
+/**
+ * Avoid inline edit fields from being too big (for HTML fields).
+ */
+.crm-container #crm-i18n-searchresults .crm-editable-enabled {
+  max-width: 500px;
+  white-space: inherit;
+}

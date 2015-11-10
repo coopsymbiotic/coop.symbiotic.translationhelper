@@ -44,6 +44,13 @@ class CRM_TranslationHelper_BAO_FindStrings {
     self::filterParameter('entity', $params, $entities);
     self::filterParameter('language', $params, $languages);
 
+    $supported_types = array(
+      CRM_Utils_Type::T_STRING,
+      CRM_Utils_Type::T_LONGTEXT,
+      CRM_Utils_Type::T_BLOB,
+      CRM_Utils_Type::T_URL,
+    );
+
     foreach ($entities as $entity_key) {
       // Fetch the multilingual (text) fields for the entity.
       $fields = array();
@@ -52,7 +59,8 @@ class CRM_TranslationHelper_BAO_FindStrings {
 
       foreach ($apiresult['values'] as $field_id => $field_val) {
         // FIXME: we assume that string fields are multilingual, but not all of them are.
-        if ($field_val['type'] == CRM_Utils_Type::T_STRING) {
+        // We check for the above supported_types, as well as making sure that it's not a 'select' field.
+        if (in_array($field_val['type'], $supported_types) && (empty($field_val['html']) || $field_val['html']['type'] != 'Select')) {
           $fields[] = array(
             'entity_type' => $entity_key,
             'field_id' => $field_id,

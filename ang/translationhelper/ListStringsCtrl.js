@@ -72,8 +72,11 @@
         { 'title': 'Field Title', 'data': 'field_title' }
       ];
 
+      var language_order = [];
+
       $(selected_languages).each(function(key, val) {
         columns.push({ 'title': val, 'data': 'value_' + val });
+        language_order.push(val);
       });
 
       $("#crm-i18n-searchresults").addClass('blockOverlay');
@@ -88,7 +91,32 @@
         $('#crm-i18n-searchresults-table').DataTable({
           data: result.values,
           columns: columns,
-          processing: true
+          processing: true,
+          fnDrawCallback: function(settings) {
+            // FIXME Not very efficient way of enabling inline-edit on the table, but proof of concept.. one hopes.
+            $(selected_languages).each(function(key, lang) {
+console.log('key: ' + key, lang);
+              var child = 5 + key;
+
+              $('#crm-i18n-searchresults-table td:nth-child(' + child + '):not(".crm-i18n-searchresults-processed")').each(function() {
+                var entity_type = $(this).parent().find('td:first-child').text();
+                var entity_id = $(this).parent().find('td:nth-child(2)').text();
+                var field_id = $(this).parent().find('td:nth-child(3)').text();
+                var language = language_order[key];
+
+                var id = entity_type + '-' + entity_id + '-' + field_id;
+
+                var html = $(this).html();
+                $(this).html('<div class="crm-entity" data-entity="TranslationString" data-id="' + id + '"><div class="crm-editable" data-action="translate" data-type="text" data-field="' + language + '">' + _.escape(html) + '</div></div>');
+
+                // Otherwise when paging back/forth in the results, we will process
+                // the same elements over and over. Find a better way?
+                $(this).closest('td').addClass('crm-i18n-searchresults-processed');
+              });
+            });
+
+            $('#crm-i18n-searchresults-table').trigger('crmLoad');
+          }
         });
 
         $('#crm-i18n-searchresults').removeClass('blockOverlay');
