@@ -9,7 +9,8 @@
   "homepage": "https://github.com/coopsymbiotic.coop/coop.symbiotic.translationhelper",
   "private": true,
   "dependencies": {
-    "datatables": "~1.10.10"
+    "datatables": "~1.10.10",
+    "fontawesome": "~4.4.0"
   },
   "ignore": [
     "**/.*",

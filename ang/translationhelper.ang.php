@@ -13,6 +13,7 @@ return array (
   ),
   'css' => array (
     0 => 'ang/translationhelper.css',
+    1 => 'bower_components/fontawesome/css/font-awesome.min.css',
   ),
   'partials' => array (
     0 => 'ang/translationhelper',
