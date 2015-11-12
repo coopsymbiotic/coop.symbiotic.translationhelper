@@ -3,6 +3,17 @@
     <p>{{ ts('Add a short help text here?') }}</p>
   </div>
 
+  <div id="crm-i18n-download">
+    <a id="crm-i18n-download-link" href="{{ crmExportUrl }}"><i class="fa fa-download"></i> {{ ts('Download') }}</a>
+    <div>
+      <label data-ng-repeat="(key, val) in availableExportFormats" ng-class="{activeformat : format == key}"><input
+        type="radio" name="format"
+        value="{{key}}"
+        ng-model="$parent.format"
+        ng-change="updateExportFormat()">{{val}}</label>
+    </div>
+  </div>
+
   <form id="crm-i18n-explorer">
     <div class="crm-section">
       <div class="label">{{ ts('Languages:') }}</div>
@@ -28,7 +39,7 @@
         </select>
       </div>
     </div>
-    <div class="crm-section">
+    <div class="crm-section" style="display: none;"> <!-- NOT IMPLEMENTED TODO -->
       <div class="label"><label>{{ ts('Search string:') }}</label></div>
       <div class="content">
         <input

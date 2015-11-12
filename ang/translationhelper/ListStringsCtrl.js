@@ -25,7 +25,19 @@
     // See: templates/CRM/translationhelper/ListStringsCtrl.hlp
     var hs = $scope.hs = crmUiHelp({file: 'CRM/translationhelper/ListStringsCtrl'});
 
+    // These things are used in the .html file
     $scope.enabled_languages = enabled_languages.values;
+    $scope.crmExportBaseUrl = CRM.url('civicrm/translation/export');
+    $scope.crmExportUrl = '';
+
+    // FIXME: we should centralise these things.
+    // CRM_TranslationHelper_Page_Export also has a list of formats.
+    $scope.availableExportFormats = {
+      'ods' : 'ods',
+      'excel2007' : 'xlsx'
+    };
+
+    $scope.format = 'ods';
 
     // Enable all languages by default.
     $scope.languages = {};
@@ -36,11 +48,18 @@
       }
     }
 
+    // Hide the download button by default
+    $('#crm-i18n-download').hide();
+
     /**
      * Search callback.
      */
     $scope.search = function search() {
       var params = {};
+
+      if (! $scope.entity) {
+        return;
+      }
 
       var selected_languages = [];
 
@@ -95,7 +114,6 @@
           fnDrawCallback: function(settings) {
             // FIXME Not very efficient way of enabling inline-edit on the table, but proof of concept.. one hopes.
             $(selected_languages).each(function(key, lang) {
-console.log('key: ' + key, lang);
               var child = 5 + key;
 
               $('#crm-i18n-searchresults-table td:nth-child(' + child + '):not(".crm-i18n-searchresults-processed")').each(function() {
@@ -120,7 +138,16 @@ console.log('key: ' + key, lang);
         });
 
         $('#crm-i18n-searchresults').removeClass('blockOverlay');
+
+        // Assume there is something downloadable.
+        $scope.crmExportUrl = $scope.crmExportBaseUrl + '?language=' + params.language.join(',') + '&entity=' + params.entity + '&format=' + $scope.format;
+        $('#crm-i18n-download').show();
       });
+    };
+
+    $scope.updateExportFormat = function updateExportFormat() {
+      // todo: store 'params' so we can do this in a cleaner way?
+      $scope.crmExportUrl = $scope.crmExportUrl.replace(/format=\w+/, 'format=' + $scope.format);
     };
   });
 

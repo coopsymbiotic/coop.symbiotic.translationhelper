@@ -5,3 +5,59 @@
   max-width: 500px;
   white-space: inherit;
 }
+
+.crm-container #crm-i18n-download {
+  float: right;
+}
+
+.crm-container #crm-i18n-download-link {
+  font-size: 150%;
+  color: #2786C2;
+  border: 1px solid #2786C2;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 10px;
+}
+
+.crm-container #crm-i18n-download-link:hover {
+  color: #2786C2;
+  box-shadow: 1px 1px 5px;
+}
+
+.crm-container #crm-i18n-download > a {
+  display: block;
+}
+
+/**
+ * Download format: hide the radio input (ugly).
+ * Highlight active option.
+ */
+.crm-container #crm-i18n-download > div {
+  text-align: center;
+  font-size: 70%;
+}
+
+.crm-container #crm-i18n-download > div > label {
+  cursor: pointer;
+  border-right: 1px dotted #ccc;
+  margin-right: 5px;
+  padding-right: 5px;
+}
+
+.crm-container #crm-i18n-download > div > label:last-child {
+  border-right: none;
+  margin-right: 0;
+  padding-right: 0;
+}
+
+.crm-container #crm-i18n-download > div > label:hover {
+  text-decoration: underline;
+}
+
+.crm-container #crm-i18n-download > div > label > input {
+  display: none;
+}
+
+.crm-container #crm-i18n-download > div > label.activeformat {
+  text-decoration: underline;
+}
