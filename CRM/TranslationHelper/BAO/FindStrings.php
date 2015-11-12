@@ -113,26 +113,29 @@ class CRM_TranslationHelper_BAO_FindStrings {
    * Always returns the keys of an array, since that's what we usually use later on.
    */
   static function filterParameter($key, $params, &$all_options) {
-    if (isset($params[$key])) {
-      $t = $params[$key];
+    if (empty($params[$key])) {
+      $all_options = array_keys($all_options);
+      return;
+    }
 
-      if (is_array($t)) {
-        $x = array_values($t);
-        $y = array_keys($all_options);
+    $t = $params[$key];
 
-        $all_options = array_intersect($x, $y);
+    if (is_array($t)) {
+      $x = array_values($t);
+      $y = array_keys($all_options);
+
+      $all_options = array_intersect($x, $y);
+    }
+    else {
+      if ($t == 'all') {
+        $all_options = array_keys($all_options);
+        return;
       }
-      else {
-        if ($t == 'all') {
-          $all_options = array_keys($all_options);
-          return;
-        }
 
-        $x = array($t);
-        $y = array_keys($all_options);
+      $x = explode(',', $t);
+      $y = array_keys($all_options);
 
-        $all_options = array_intersect($x, $y);
-      }
+      $all_options = array_intersect($x, $y);
     }
   }
 
