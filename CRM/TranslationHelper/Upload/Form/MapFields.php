@@ -134,7 +134,7 @@ class CRM_TranslationHelper_Upload_Form_MapFields extends CRM_Core_Form {
       'queue' => $queue,
       'errorMode' => CRM_Queue_Runner::ERROR_ABORT,
       'onEnd' => array('CRM_TranslationHelper_Upload_Form_Results', 'importFinished'),
-      'onEndUrl' => CRM_Utils_System::url('civicrm/translation/import', array('qfKey' => $_REQUEST['qfKey'], '_qf_Results_display' => 'true')),
+      'onEndUrl' => CRM_Utils_System::url('civicrm/translation/import', array('qfKey' => $_REQUEST['qfKey'])),
     ));
 
     // does not return
