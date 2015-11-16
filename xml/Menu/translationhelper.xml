@@ -6,4 +6,12 @@
     <title>Export</title>
     <access_arguments>access CiviCRM</access_arguments>
   </item>
+  <item>
+    <path>civicrm/translation/import</path>
+    <page_callback>CRM_TranslationHelper_Upload_Controller</page_callback>
+    <title>Translation Upload</title>
+    <access_arguments>translate CiviCRM</access_arguments>
+    <is_ssl>true</is_ssl>
+    <is_public>true</is_public>
+  </item>
 </menu>

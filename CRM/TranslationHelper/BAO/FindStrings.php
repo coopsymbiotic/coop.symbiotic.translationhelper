@@ -26,7 +26,13 @@ class CRM_TranslationHelper_BAO_FindStrings {
    * Wrapper to return enabled languages.
    */
   static function enabledLanguages() {
-    return CRM_Core_I18n::languages(TRUE);
+    static $languages = NULL;
+
+    if (empty($languages)) {
+      $languages = CRM_Core_I18n::languages(TRUE);
+    }
+
+    return $languages;
   }
 
   /**

@@ -11,7 +11,18 @@ function civicrm_api3_translation_string_translate($params) {
   // id = ContributionPage-1-title
   // en_us = Donate test
 
-  list($entity_type, $entity_id, $field_id) = explode('-', $params['id']);
+  $entity_type = NULL;
+  $entity_id = NULL;
+  $field_id = NULL;
+
+  if (isset($params['id'])) {
+    list($entity_type, $entity_id, $field_id) = explode('-', $params['id']);
+  }
+  else {
+    $entity_type = CRM_Utils_Array::value('entity_type', $params);
+    $entity_id = CRM_Utils_Array::value('entity_id', $params);
+    $field_id = CRM_Utils_Array::value('field_id', $params);
+  }
 
   $languages = CRM_TranslationHelper_BAO_FindStrings::enabledLanguages();
 
