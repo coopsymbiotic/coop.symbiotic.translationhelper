@@ -26,12 +26,15 @@ function civicrm_api3_translation_string_translate($params) {
 
   $languages = CRM_TranslationHelper_BAO_FindStrings::enabledLanguages();
 
+  // The API call can update multiple languages at one.
+  // Ex: 'en_US' => 'Foo', 'fr_CA' => 'Bar'.
   foreach ($languages as $lang => $val) {
     if (isset($params[$lang])) {
       civicrm_api3($entity_type, 'setvalue', array(
         'id' => $entity_id,
         'field' => $field_id,
         'value' => $params[$lang],
+        'option.language' => $lang,
       ));
     }
   }
