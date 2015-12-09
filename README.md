@@ -43,6 +43,12 @@ the drush module to your ~/.drush/ directory.
 
 Example: ln -s `pwd`/translationhelper.drush.inc ~/.drush/translationhelper.drush.inc
 
+Example drush usages:
+
+```
+drush translationhelper-importfile /tmp/CiviCRM_Translations_20151209-1518.ods en_US,fr_CA --debug
+```
+
 Developer notes
 ---------------
 
