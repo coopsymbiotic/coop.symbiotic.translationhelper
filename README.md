@@ -17,11 +17,9 @@ Features
 
 * Search for translatable user-configurations.
 * Edit/update translations directly from the search results.
-
-TODO:
-
 * Export as a spreadsheet for Excel/LibreOffice.
-* Import from a spreadsheet.
+* Import from a spreadsheet using interactive upload wizard.
+* Import from a spreadsheet using Drush (to help with automated installations).
 
 Demo:
 
@@ -39,6 +37,11 @@ Installation
 * A new menu item will be added in Administer > ?? (FIXME)
 
 The direct URL for now is: /civicrm/a/#/i18n
+
+To use Drush, since this extension is not a Drupal module, you will have to copy or symlink
+the drush module to your ~/.drush/ directory.
+
+Example: ln -s `pwd`/translationhelper.drush.inc ~/.drush/translationhelper.drush.inc
 
 Developer notes
 ---------------
