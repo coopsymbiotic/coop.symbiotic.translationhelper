@@ -67,9 +67,13 @@ class CRM_TranslationHelper_BAO_FindStrings {
         // FIXME: we assume that string fields are multilingual, but not all of them are.
         // We check for the above supported_types, as well as making sure that it's not a 'select' field.
         if (in_array($field_val['type'], $supported_types) && (empty($field_val['html']) || $field_val['html']['type'] != 'Select')) {
+          if ($field_val['name'] == 'name') {
+            continue;
+          }
+
           $fields[] = array(
             'entity_type' => $entity_key,
-            'field_id' => $field_id,
+            'field_id' => $field_val['name'],
             'field_title' => $field_val['title'],
           );
         }
