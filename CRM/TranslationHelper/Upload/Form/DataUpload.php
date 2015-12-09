@@ -69,7 +69,7 @@ class CRM_TranslationHelper_Upload_Form_DataUpload extends CRM_Core_Form {
     $tmp_file = $file['tmp_name'];
     $file_type = PHPExcel_IOFactory::identify($tmp_file);
 
-    $supported_formats = array('Excel2007', 'OpenDocument', 'OOCalc');
+    $supported_formats = CRM_TranslationHelper_Upload_Utils::getSupportedUploadFormats();
 
     if (! in_array($file_type, $supported_formats)) {
       $this->setElementError('uploadFile', $this->ts("The uploaded file must be in either Excel2007 (xlsx) or OpenDocument (ods) format. Detected format: %1.", array(1 => $file_type)));
@@ -92,7 +92,6 @@ class CRM_TranslationHelper_Upload_Form_DataUpload extends CRM_Core_Form {
     $file = $e->getValue();
 
     $tmp_file = $file['tmp_name'];
-    $orig_name = $file['name'];
 
     // Import into a temp DB table
     $file_type = PHPExcel_IOFactory::identify($tmp_file);
@@ -156,25 +155,6 @@ class CRM_TranslationHelper_Upload_Form_DataUpload extends CRM_Core_Form {
   }
 
   /**
-   * Extract the column headers (first row).
-   * NB: we're not using all of $data[1], because it contains values from column 'A' to 'AMK' (1024+1 cols).
-   *
-   * @param Array &$data PHPExcel data
-   * @returns Array key/val.
-   */
-  function extractColumnHeaders(&$data) {
-    $headers = array();
-
-    foreach ($data[1] as $key => $val) {
-      if ($val) {
-        $headers[$key] = trim($val);
-      }
-    }
-
-    return $headers;
-  }
-
-  /**
    * Extracts the headers/columns from the data and creates a new SQL table,
    * then stores the data in it.
    */
@@ -185,7 +165,7 @@ class CRM_TranslationHelper_Upload_Form_DataUpload extends CRM_Core_Form {
     $tableName = 'civicrm_transhelper_' . md5(uniqid(rand(), TRUE));
     $this->controller->set('tableName', $tableName);
 
-    $headers = $this->extractColumnHeaders($data);
+    $headers = CRM_TranslationHelper_Upload_Utils::extractColumnHeaders($data);
     $this->controller->set('headers', $headers);
 
     if (! count($headers)) {
