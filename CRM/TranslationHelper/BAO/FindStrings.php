@@ -15,10 +15,13 @@ class CRM_TranslationHelper_BAO_FindStrings {
     return array(
       'ContributionPage' => ts('Contribution Pages'),
       'Event' => ts('Event Pages'),
+      'Group' => ts('Groups'),
       'CustomGroup' => ts('Custom Groups'),
       'CustomField' => ts('Custom Fields'),
       'OptionGroup' => ts('Option Groups'),
       'OptionValue' => ts('Option Values'),
+      'UFGroup' => ts('Profile Groups'),
+      'UFField' => ts('Profile Fields'),
     );
   }
 
@@ -57,6 +60,17 @@ class CRM_TranslationHelper_BAO_FindStrings {
       CRM_Utils_Type::T_URL,
     );
 
+    // A few exceptions until we add 'is multilingual' to the civicrm schema/dao
+    $option_group_fields = array(
+      'label',
+      'description',
+    );
+
+    $group_fields = array(
+      'title',
+      'description',
+    );
+
     foreach ($entities as $entity_key) {
       // Fetch the multilingual (text) fields for the entity.
       $fields = array();
@@ -68,6 +82,15 @@ class CRM_TranslationHelper_BAO_FindStrings {
         // We check for the above supported_types, as well as making sure that it's not a 'select' field.
         if (in_array($field_val['type'], $supported_types) && (empty($field_val['html']) || $field_val['html']['type'] != 'Select')) {
           if ($field_val['name'] == 'name') {
+            continue;
+          }
+
+          // A few exceptions until we add 'is multilingual' to the civicrm schema/dao
+          if ($entity_key == 'OptionValue' && ! in_array($field_val['name'], $option_group_fields)) {
+            continue;
+          }
+
+          if ($entity_key == 'Group' && ! in_array($field_val['name'], $group_fields)) {
             continue;
           }
 
