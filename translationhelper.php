@@ -92,3 +92,23 @@ function translationhelper_civicrm_managed(&$entities) {
 function translationhelper_civicrm_angularModules(&$angularModules) {
   _translationhelper_civix_civicrm_angularModules($angularModules);
 }
+
+/**
+ * Implements hook_civicrm_navigationMenu.
+ */
+function translationhelper_civicrm_navigationMenu(&$menu) {
+  $item1 = array(
+    'name' => "Translation Helper Browser",
+    'url' => 'civicrm/a/#/i18n',
+    'permission' => 'translate CiviCRM',
+  );
+
+  $item2 = array(
+    'name' => "Translation Helper Import",
+    'url' => 'civicrm/translation/import?reset=1',
+    'permission' => 'translate CiviCRM',
+  );
+
+  _translationhelper_civix_insert_navigation_menu($menu, 'Administer/Localization', $item1);
+  _translationhelper_civix_insert_navigation_menu($menu, 'Administer/Localization', $item2);
+}

@@ -39,9 +39,7 @@ Installation
 ------------
 
 * Enable this extension in CiviCRM (Administer > System Settings > Manage Extensions)
-* A new menu item will be added in Administer > ?? (FIXME)
-
-The direct URL for now is: /civicrm/a/#/i18n
+* Two new menu items will be added in Administer > Localization.
 
 To use Drush, since this extension is not a Drupal module, you will have to copy or symlink
 the drush module to your ~/.drush/ directory.
