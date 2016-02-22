@@ -25,6 +25,11 @@ Demo:
 
 * https://www.youtube.com/watch?v=Lfs_AUEejCM
 
+Known issues
+------------
+
+See: https://github.com/coopsymbiotic/coop.symbiotic.translationhelper/issues
+
 Requirements
 ------------
 
