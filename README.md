@@ -30,6 +30,9 @@ Known issues
 
 See: https://github.com/coopsymbiotic/coop.symbiotic.translationhelper/issues
 
+If you are using CiviCRM 4.7 and less than 4.7.11), you must apply this patch:
+https://github.com/civicrm/civicrm-core/pull/8647
+
 Requirements
 ------------
 
@@ -64,6 +67,9 @@ composer install
 
 This extension uses a more recent version of jQuery DataTables
 since the one included in CiviCRM 4.6 has known bugs when dealing with objects.
+
+For CiviCRM 4.7, you do not need to run `bower install`. Running `composer install`
+is only required if you want to export/import data.
 
 Brainstorm
 ----------
