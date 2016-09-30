@@ -14,4 +14,17 @@
     <is_ssl>true</is_ssl>
     <is_public>true</is_public>
   </item>
+  <item>
+    <path>civicrm/translation/stats</path>
+    <title>Translation Helper Statistics</title>
+    <page_callback>CRM_TranslationHelper_Page_Stats</page_callback>
+    <access_arguments>translate CiviCRM</access_arguments>
+  </item>
+  <item>
+    <path>civicrm/translation/settings</path>
+    <title>Translation Helper Settings</title>
+    <page_callback>CRM_TranslationHelper_Form_Settings</page_callback>
+    <adminGroup>System Settings</adminGroup>
+    <access_arguments>translate CiviCRM</access_arguments>
+  </item>
 </menu>
