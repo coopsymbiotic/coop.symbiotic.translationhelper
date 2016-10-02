@@ -37,13 +37,23 @@ function civicrm_api3_transifex_gettranslation($params) {
   // - stop on first exact match?
   // - start by searching common-components?
   foreach ($resources['values'] as $key => $val) {
+    // For now, skipping these resources because it's extremely unlikely
+    // to be translating them (can't access them through the UI for now).
+    if (in_array($val->slug, ['countries', 'install', 'provinces'])) {
+      continue;
+    }
+
     $resource_slug = $val->slug;
     $lang = Civi::settings()->get('translationhelper_transifex_language');
 
     $tmp = $transifex->get('translationstrings')->getStrings('civicrm', $resource_slug, $lang, FALSE, $options);
 
-    if (! empty($tmp)) {
-      foreach ($tmp as $t) {
+    if (empty($tmp)) {
+      continue;
+    }
+
+    foreach ($tmp as $t) {
+      if ($t->key == $params['key'] && $t->context == CRM_Utils_Array::value('context', $params, '')) {
         $result['values'][] = array(
           'comment' => $t->comment,
           'context' => $t->context,
@@ -54,6 +64,8 @@ function civicrm_api3_transifex_gettranslation($params) {
           'translation' => $t->translation,
           'resource_slug' => $resource_slug,
         );
+
+        return $result;
       }
     }
   }
