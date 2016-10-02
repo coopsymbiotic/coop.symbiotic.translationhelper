@@ -40,6 +40,9 @@
       event.preventDefault();
     });
 
+    /**
+     * Translatable string is clicked.
+     */
     $('.translationhelper-string').click(function(event) {
       var string_key = $(this).data('translationhelper-key');
       var string_context = $(this).data('translationhelper-context');
@@ -79,15 +82,20 @@
       event.preventDefault();
     });
 
+    /**
+     * Panel button "Translate String".
+     */
     $('#translationhelper-panel-selectstring').click(function(event) {
       if ($(this).data('translationhelper-selectstring') != 'enabled') {
         // Enable string select
         $(this).data('translationhelper-selectstring', 'enabled');
+        $('body').addClass('translationhelper-selectstring-enabled');
         // FIXME: move to CSS
         $('#translationhelper-panel-selectstring').css('background', '#00406e');
       }
       else {
         $(this).data('translationhelper-selectstring', 'disabled');
+        $('body').removeClass('translationhelper-selectstring-enabled');
         // FIXME: move to CSS
         $('#translationhelper-panel-selectstring').css('background', '#0064ab');
       }
