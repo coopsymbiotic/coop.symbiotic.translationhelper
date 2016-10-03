@@ -55,5 +55,19 @@ function civicrm_api3_transifex_createtranslation($params) {
     throw new Exception("Transifex update failed: " . $response->body);
   }
 
+  // Save the translation in our local cache, so that the
+  // user can see the result of the translation without updating
+  // their .mo file.
+  //
+  // NB: this means that only "known" strings will be cached.
+  // In a sense, it might be a feature, since we don't want users to
+  // start using this as a way to avoid using Transifex (à-la-Drupal).
+  CRM_Core_DAO::executeQuery('UPDATE civicrm_translationhelper_cache SET translation = %1 WHERE string_hash = %2 AND resource = %3 AND language = %4', [
+    1 => [$params['value'], 'String'],
+    2 => [$hash, 'String'],
+    3 => [$resource, 'String'],
+    4 => [$lang, 'String'],
+  ]);
+
   return $result;
 }

@@ -27,19 +27,21 @@ function civicrm_api3_transifex_updatecache($params) {
   CRM_Core_DAO::executeQuery('TRUNCATE civicrm_translationhelper_cache');
 
   foreach ($resources['values'] as $key => $val) {
-    $strings = $transifex->get('translationstrings')->getStrings('civicrm', $val->slug, $lang);
+    $slug = $val->slug;
+    $strings = $transifex->get('translationstrings')->getStrings('civicrm', $slug, $lang);
 
     foreach ($strings as $key2 => $val2) {
       $hash = md5($val2->key . ':' . $val2->context);
 
-      CRM_Core_DAO::executeQuery('INSERT INTO civicrm_translationhelper_cache (string_key, string_hash, context, resource, domain, language)
-        VALUES(%1, %2, %3, %4, %5, %6)', array(
+      CRM_Core_DAO::executeQuery('INSERT INTO civicrm_translationhelper_cache (string_key, string_hash, context, resource, domain, language, translation)
+        VALUES(%1, %2, %3, %4, %5, %6, %7)', array(
           1 => array($val2->key, 'String'),
           2 => array($hash, 'String'),
           3 => array($val2->context, 'String'),
-          4 => array($val->slug, 'String'),
+          4 => array($slug, 'String'),
           5 => array('civicrm', 'String'), // FIXME: for extensions this will be the ext longname
           6 => array($lang, 'String'),
+          7 => array($val2->translation, 'String'),
       ));
     }
   }

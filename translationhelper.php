@@ -138,25 +138,41 @@ function translationhelper_ts($string, $params = array()) {
   static $i18n = NULL;
 
   $tsLocale = CRM_Core_I18n::getLocale();
+
   if (!$i18n or $locale != $tsLocale) {
     $i18n = CRM_Core_I18n::singleton();
     $locale = $tsLocale;
   }
 
-  $keys = [
-    $string,
-    CRM_Utils_Array::value('domain', $params, ''),
+  $context = CRM_Utils_Array::value('context', $params, '');
+  $hash = md5($string . ':' . $context);
+
+  $override = CRM_TranslationHelper_Utils::getStringTranslationFromCache($string, $context, $tsLocale);
+
+  if ($override) {
+    $translated = $i18n->crm_translate($override, $params);
+  }
+  else {
+    $translated = $i18n->crm_translate($string, $params);
+  }
+
+  $ignore_strings = [
+    // Search bar
+    'Contacts',
+    'Go',
+    // Buttons
+    'Save',
+    'Save and New',
+    'Save and Next',
+    'Save and Done',
+    'Cancel',
   ];
-
-  $hash = md5(implode(':', $keys));
-
-  $translated = $i18n->crm_translate($string, $params);
 
   if (CRM_Utils_Array::value('escape', $params) == 'js') {
     // $translated = "<span class=\'translationhelper-string\' data-translationhelper-hash=\'$hash\'>$translated</span>";
     return $translated;
   }
-  elseif ($string == 'Contacts' || $string == 'Go' || $string == 'Save' || $string == 'Cancel') {
+  elseif (in_array($string, $ignore_strings)) {
     // FIXME: in templates/CRM/common/navigation.js.tpl
     // placeholder="{ts}Contacts{/ts}" should have escape=js?
     // Same for: value="{ts}Go{/ts}"
@@ -164,7 +180,6 @@ function translationhelper_ts($string, $params = array()) {
   }
   else {
     $context = CRM_Utils_Array::value('context', $params, '');
-
     $translated = "<span class='translationhelper-string' data-translationhelper-key='$string' data-translationhelper-context='$context'>$translated</span>";
   }
 

@@ -14,6 +14,8 @@ function civicrm_api3_transifex_gettranslation($params) {
     'values' => array(),
   );
 
+  $language = Civi::settings()->get('translationhelper_transifex_language');
+
   /**
    * If the string is cached, fetch its 'resource' and limit our
    * search to that specific resource. Otherwise, loop through all
@@ -21,7 +23,7 @@ function civicrm_api3_transifex_gettranslation($params) {
    */
   $resources = [];
 
-  $tmp = CRM_TranslationHelper_Utils::getStringResourceFromCache($params['key'], $params['context']);
+  $tmp = CRM_TranslationHelper_Utils::getStringResourceFromCache($params['key'], $params['context'], $language);
 
   if ($tmp) {
     $resources[] = $tmp;
@@ -58,8 +60,7 @@ function civicrm_api3_transifex_gettranslation($params) {
       continue;
     }
 
-    $lang = Civi::settings()->get('translationhelper_transifex_language');
-    $tmp = $transifex->get('translationstrings')->getStrings('civicrm', $slug, $lang, FALSE, $options);
+    $tmp = $transifex->get('translationstrings')->getStrings('civicrm', $slug, $language, FALSE, $options);
 
     if (empty($tmp)) {
       continue;
@@ -77,6 +78,15 @@ function civicrm_api3_transifex_gettranslation($params) {
           'translation' => $t->translation,
           'resource_slug' => $slug,
         );
+
+        $hash = md5($t->key . ':' . $t->context);
+
+        CRM_Core_DAO::executeQuery('UPDATE civicrm_translationhelper_cache SET translation = %1 WHERE string_hash = %2 AND resource = %3 AND language = %4', [
+          1 => [$t->translation, 'String'],
+          2 => [$hash, 'String'],
+          3 => [$slug, 'String'],
+          4 => [$language, 'String'],
+        ]);
 
         return $result;
       }
