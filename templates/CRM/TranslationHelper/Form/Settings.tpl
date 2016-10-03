@@ -20,5 +20,48 @@
       </td>
     </tr>
   </table>
+
+  {if $translationhelper_cache_update}
+    <p>{ts 1=$translationhelper_cache_count 2=$translationhelper_cache_update}The local cache has %1 entries and was last updated on %2.{/ts} <a href="#" id="translationhelper-refresh-cache">{ts}Update the cache{/ts}</a></p>
+  {else}
+    <p>{ts 1=$translationhelper_cache_count}The local cache has %1 entries.{/ts} <a href="#" id="translationhelper-refresh-cache">{ts}Update the cache{/ts}</a></p>
+  {/if}
+
   <div class="crm-submit-buttons">{include file="CRM/common/formButtons.tpl" location="bottom"}</div>
+
+  {literal}
+    <script>
+    /**
+     * Settings "refresh cache".
+     */
+    CRM.$(function($) {
+      $('#translationhelper-refresh-cache').click(function(event) {
+        event.stopPropagation();
+        CRM.alert('{/literal}{ts escape="js"}This might take a minute or two. CiviCRM core has more than 17,000 strings.{/ts}{literal}', '{/literal}{ts escape="js"}Refreshing...{/ts}{literal}', 'crm-msg-loading', {expires: 0});
+
+        var id = window.setInterval(function() {
+          CRM.api3('Transifex', 'Countcacheitems')
+            .done(function(result) {
+              $('#crm-notification-container .crm-msg-loading').append('<div>' + ts('Downloaded %1 strings', {1: result.result}) + '</div>');
+            });
+        }, 5000);
+
+        CRM.api3('Transifex', 'Updatecache')
+          .done(function(result) {
+            window.clearInterval(id);
+
+            if (result.is_error) {
+              CRM.alert(result.error_message, '{/literal}{ts escape="js"}Refresh Error{/ts}{literal}', 'error');
+            }
+            else {
+              CRM.alert('', '{/literal}{ts escape="js"}Ready{/ts}{/literal}', 'success');
+              $('#crm-notification-container .crm-msg-loading').hide();
+            }
+          });
+
+        return false;
+      });
+    });
+    </script>
+  {/literal}
 </div>

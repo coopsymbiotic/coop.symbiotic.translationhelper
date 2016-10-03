@@ -180,5 +180,23 @@
         CRM.translationHelperDisableTranslateString();
       }
     });
+
+    /**
+     * Settings "refresh cache".
+     */
+    $('#translationhelper-refresh-cache').click(function(event) {
+      event.stopPropagation();
+      CRM.alert(ts('This might take a minute or two.'), ts('Refreshing...'), 'crm-msg-loading', {expires: 0});
+      CRM.api3('Transifex', 'Updatecache', {}, {
+        'callBack' : function(result){
+          if (result.is_error) {
+            CRM.alert(result.error_message, '{/literal}{ts escape="js"}Refresh Error{/ts}{literal}', 'error');
+          } else {
+            CRM.alert('', ts('Ready'), 'success');
+          }
+        }
+      });
+      return false;
+    });
   });
 })(CRM.$, CRM._, CRM.ts('translationhelper'));

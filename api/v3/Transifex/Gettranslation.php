@@ -14,7 +14,25 @@ function civicrm_api3_transifex_gettranslation($params) {
     'values' => array(),
   );
 
-  $resources = civicrm_api3('Transifex', 'getresource');
+  /**
+   * If the string is cached, fetch its 'resource' and limit our
+   * search to that specific resource. Otherwise, loop through all
+   * resources and find the first match.
+   */
+  $resources = [];
+
+  $tmp = CRM_TranslationHelper_Utils::getStringResourceFromCache($params['key'], $params['context']);
+
+  if ($tmp) {
+    $resources[] = $tmp;
+  }
+  else {
+    $tmp = civicrm_api3('Transifex', 'getresource');
+
+    foreach ($tmp['values'] as $key => $val) {
+      $resources[] = $val->slug;
+    }
+  }
 
   require_once 'vendor/autoload.php';
 
@@ -28,25 +46,20 @@ function civicrm_api3_transifex_gettranslation($params) {
   ];
 
   if (! empty($params['context'])) {
-    // FIXME: not working?
+    // FIXME: This does not work.
     // Ex: drush cvapi Transifex.gettranslation key='Date Formats' context='menu'
-    // $options['context'] = $params['context'];
+    // $options['context'] = urlencode($params['context']);
   }
 
-  // TODO:
-  // - stop on first exact match?
-  // - start by searching common-components?
-  foreach ($resources['values'] as $key => $val) {
+  foreach ($resources as $slug) {
     // For now, skipping these resources because it's extremely unlikely
     // to be translating them (can't access them through the UI for now).
-    if (in_array($val->slug, ['countries', 'install', 'provinces'])) {
+    if (in_array($slug, ['countries', 'install', 'provinces'])) {
       continue;
     }
 
-    $resource_slug = $val->slug;
     $lang = Civi::settings()->get('translationhelper_transifex_language');
-
-    $tmp = $transifex->get('translationstrings')->getStrings('civicrm', $resource_slug, $lang, FALSE, $options);
+    $tmp = $transifex->get('translationstrings')->getStrings('civicrm', $slug, $lang, FALSE, $options);
 
     if (empty($tmp)) {
       continue;
@@ -62,7 +75,7 @@ function civicrm_api3_transifex_gettranslation($params) {
           'pluralized' => $t->pluralized,
           'source_string' => $t->source_string,
           'translation' => $t->translation,
-          'resource_slug' => $resource_slug,
+          'resource_slug' => $slug,
         );
 
         return $result;
