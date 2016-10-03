@@ -37,7 +37,10 @@ return [
     'name' => 'translationhelper_transifex_language',
     'type' => 'Text',
     'quick_form_type' => 'Element',
-    'html_type' => 'Text',
+    'html_type' => 'Select',
+    'pseudoconstant' => array(
+      'callback' => 'CRM_Core_I18n::languages',
+    ),
     'default' => NULL,
     'add' => '1.0',
     'is_domain' => 1,

@@ -16,7 +16,8 @@
     <tr class="crm-translationhelper-form-block">
       <td class="label">{$form.translationhelper_transifex_language.label}</td>
       <td>{$form.translationhelper_transifex_language.html}
-        <div class="description">Ex: fr_CA, en_UK, jp_JP, etc. (TODO: this should be a select)</div>
+        {capture assign="localizationURL"}href="{crmURL p='civicrm/admin/setting/localization' q='reset=1'}"{/capture}
+        <div class="description">{ts 1=$localizationURL domain='coop.symbiotic.translationhelper'}The language must be enabled in the <a %1>localization settings</a>.{/ts}</div>
       </td>
     </tr>
   </table>
