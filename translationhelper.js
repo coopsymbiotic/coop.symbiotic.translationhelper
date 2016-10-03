@@ -26,7 +26,7 @@
       if ($('#translationhelper-panel').width() <= 100) {
         $('#translationhelper-panel').animate({
           width: 280
-        }, 700, function() {
+        }, 500, function() {
           $('#translationhelper-panel-details').show();
           $('#translationhelper-panel').addClass('translationhelper-panel-open');
         });
