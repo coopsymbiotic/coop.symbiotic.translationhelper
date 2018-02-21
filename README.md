@@ -30,13 +30,13 @@ Known issues
 
 See: https://github.com/coopsymbiotic/coop.symbiotic.translationhelper/issues
 
-If you are using CiviCRM 4.7 and less than 4.7.11), you must apply this patch:
-https://github.com/civicrm/civicrm-core/pull/8647
+You may need to apply a patch on core, please provide feedback on this issue:  
+https://github.com/coopsymbiotic/coop.symbiotic.translationhelper/issues/10
 
 Requirements
 ------------
 
-- CiviCRM >= 4.6
+- CiviCRM >= 4.7.11
 
 Installation
 ------------
