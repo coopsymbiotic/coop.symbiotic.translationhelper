@@ -9,6 +9,14 @@ require_once 'translationhelper.civix.php';
  */
 function translationhelper_civicrm_config(&$config) {
   _translationhelper_civix_civicrm_config($config);
+
+  $config = CRM_Core_Config::singleton();
+  $config->customTranslateFunction = 'translationhelper_ts';
+
+  if (empty($_REQUEST['snipppet'])) {
+    CRM_Core_Resources::singleton()->addScriptFile('coop.symbiotic.translationhelper', 'translationhelper.js');
+    CRM_Core_Resources::singleton()->addStyleFile('coop.symbiotic.translationhelper', 'translationhelper.css');
+  }
 }
 
 /**
@@ -87,6 +95,13 @@ function translationhelper_civicrm_managed(&$entities) {
 }
 
 /**
+ * Implements hook_civicrm_alterSettingsFolders().
+ */
+function translationhelper_civicrm_alterSettingsFolders(&$metaDataFolders) {
+  _translationhelper_civix_civicrm_alterSettingsFolders($metaDataFolders);
+}
+
+/**
  * @param $angularModule
  */
 function translationhelper_civicrm_angularModules(&$angularModules) {
@@ -111,4 +126,62 @@ function translationhelper_civicrm_navigationMenu(&$menu) {
 
   _translationhelper_civix_insert_navigation_menu($menu, 'Administer/Localization', $item1);
   _translationhelper_civix_insert_navigation_menu($menu, 'Administer/Localization', $item2);
+}
+
+/**
+ *
+ */
+function translationhelper_ts($string, $params = array()) {
+  // Copied from CRM_Core_I18n::ts()
+  static $config = NULL;
+  static $locale = NULL;
+  static $i18n = NULL;
+
+  $tsLocale = CRM_Core_I18n::getLocale();
+
+  if (!$i18n or $locale != $tsLocale) {
+    $i18n = CRM_Core_I18n::singleton();
+    $locale = $tsLocale;
+  }
+
+  $context = CRM_Utils_Array::value('context', $params, '');
+  $hash = md5($string . ':' . $context);
+
+  $override = CRM_TranslationHelper_Utils::getStringTranslationFromCache($string, $context, $tsLocale);
+
+  if ($override) {
+    $translated = $i18n->crm_translate($override, $params);
+  }
+  else {
+    $translated = $i18n->crm_translate($string, $params);
+  }
+
+  $ignore_strings = [
+    // Search bar
+    'Contacts',
+    'Go',
+    // Buttons
+    'Save',
+    'Save and New',
+    'Save and Next',
+    'Save and Done',
+    'Cancel',
+  ];
+
+  if (CRM_Utils_Array::value('escape', $params) == 'js') {
+    // $translated = "<span class=\'translationhelper-string\' data-translationhelper-hash=\'$hash\'>$translated</span>";
+    return $translated;
+  }
+  elseif (in_array($string, $ignore_strings)) {
+    // FIXME: in templates/CRM/common/navigation.js.tpl
+    // placeholder="{ts}Contacts{/ts}" should have escape=js?
+    // Same for: value="{ts}Go{/ts}"
+    return $translated;
+  }
+  else {
+    $context = CRM_Utils_Array::value('context', $params, '');
+    $translated = "<span class='translationhelper-string' data-translationhelper-key='$string' data-translationhelper-context='$context'>$translated</span>";
+  }
+
+  return $translated;
 }

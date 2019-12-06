@@ -1,0 +1,62 @@
+/**
+ * Translation Helper side panel.
+ */
+#translationhelper-panel {
+  position: fixed;
+  right: 0;
+  top: 200px;
+  width: 70px;
+  background: #00406e;
+  color: #fff;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  border-radius: 7px 0 0 7px;
+}
+
+#translationhelper-panel:hover,
+#translationhelper-panel.translationhelper-panel-open {
+  background: #0064ab;
+}
+
+#translationhelper-panel #translationhelper-panel-details {
+  float: left;
+  padding: 10px;
+  width: 180px;
+  display: none;
+}
+
+#translationhelper-panel-label {
+  float: right;
+  text-orientation: sideways;
+  writing-mode: vertical-rl;
+  padding: 1em;
+  font-size: 18pt;
+}
+
+#translationhelper-panel a,
+#translationhelper-panel a:hover,
+#translationhelper-panel a:active,
+#translationhelper-panel a:focus {
+  color: #fff;
+  display: block;
+  text-decoration: none;
+}
+
+#translationhelper-panel-details > a {
+  border: 1px dotted #fff;
+  border-radius: 5px;
+  padding: 0.5em;
+  margin-top: 0.5em;
+}
+
+#translationhelper-panel-details > a:first-child {
+  margin-top: 0;
+  margin-bottom: 1.5em;
+}
+
+/**
+ * Translatable string.
+ */
+body.translationhelper-selectstring-enabled .translationhelper-string {
+  border: 1px dotted #777;
+  box-shadow: 0 2px 4px 0 rgba(0,0,250,0.2), 0 3px 10px 0 rgba(0,0,0,0.19);
+}

@@ -11,7 +11,7 @@ class CRM_TranslationHelper_Page_Export extends CRM_Core_Page {
   protected $_helper = NULL;
 
   function run() {
-    CRM_Utils_System::setTitle(ts('Export translation strings'));
+    CRM_Utils_System::setTitle(ts('Export translation strings', ['domain' => 'coop.symbiotic.translationhelper']));
 
     $params = array();
     $params['language'] = CRM_Utils_Request::retrieve('language', 'String');
@@ -37,7 +37,7 @@ class CRM_TranslationHelper_Page_Export extends CRM_Core_Page {
       $this->export2excel2007($values);
     }
     else {
-      CRM_Core_Error::fatal(ts("Unsupported output format: %1.", array(1 => $format)));
+      CRM_Core_Error::fatal(ts("Unsupported output format: %1.", array(1 => $format, 'domain' => 'coop.symbiotic.translationhelper')));
     }
   }
 
@@ -61,7 +61,7 @@ class CRM_TranslationHelper_Page_Export extends CRM_Core_Page {
       // also, we do not include the file extension, since it is set by the helper.
       $datetime = date('Ymd-Gi', $_SERVER['REQUEST_TIME']);
       $dlfilename = 'CiviCRM_Translations_' . $datetime;
-      $description = ts('CiviCRM translation strings');
+      $description = ts('CiviCRM translation strings', ['domain' => 'coop.symbiotic.translationhelper']);
 
       $this->_helper->download_headers($dlfilename, $description);
     }
