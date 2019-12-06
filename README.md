@@ -36,7 +36,7 @@ https://github.com/coopsymbiotic/coop.symbiotic.translationhelper/issues/10
 Requirements
 ------------
 
-- CiviCRM >= 4.7.11
+- CiviCRM >= 5.0
 
 Installation
 ------------
@@ -80,24 +80,15 @@ Brainstorm
 Support
 -------
 
-Please post bug reports in the issue tracker of this project on github:  
-https://github.com/coopsymbiotic/coop.symbiotic.translationhelper/issues
-
-For general support questions, please use the CiviCRM Extensions forum:  
-http://forum.civicrm.org/index.php/board,57.0.html
+Please post bug reports in the issue tracker of this project:  
+https://lab.civicrm.org/extensions/translationhelper/issues
 
 This is a community contributed extension written thanks to the financial
 support of organisations using it, as well as the very helpful and collaborative
 CiviCRM community.
 
-Please consider contributing to the CiviCRM project:  
-http://civicrm.org/participate/support-civicrm
-
-While I do my best to provide volunteer support for this extension, please
-consider financially contributing to support and further develop this extension.
-
 Commercial support is available through Coop SymbioTIC:  
-https://www.symbiotic.coop
+https://www.symbiotic.coop/en
 
 Copyright
 ---------
